@@ -1,5 +1,15 @@
+import psycopg2
 from selenium.webdriver import Safari
 from selenium.webdriver.common.by import By
+
+# connect to postgres
+conn = psycopg2.connect(
+    dbname="nfl_prospects",
+    user="",       
+    password="",  
+    host="localhost"
+)
+cur = conn.cursor()
 
 driver = Safari()
 
@@ -29,7 +39,13 @@ for position in positions:
             break
         prospects[position].append((player_ranking, player_name))
         print(f"Added {player_name} (#{player_ranking})")
+        cur.execute(
+            "INSERT INTO prospects (position, ranking, name) VALUES (%s, %s, %s)",
+            (position, player_ranking, player_name)
+        )
 
+conn.commit()
+cur.close()
+conn.close()
 driver.close()
 print("Driver closed, scraping complete")
-
