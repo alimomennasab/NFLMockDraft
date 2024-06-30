@@ -1,13 +1,22 @@
+import os
+from dotenv import load_dotenv
 import psycopg2
 from selenium.webdriver import Safari
 from selenium.webdriver.common.by import By
 
+# retrieve environmental 
+load_dotenv()
+db_name = os.getenv("DB_NAME")
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_host = os.getenv("DB_HOST")
+
 # connect to postgres
 conn = psycopg2.connect(
-    dbname="nfl_project",
-    user="",       
-    password="",  
-    host="localhost"
+    dbname=db_name,
+    user=db_user,       
+    password=db_password,  
+    host=db_host
 )
 cur = conn.cursor()
 
@@ -66,7 +75,7 @@ def scrape_teams():
             (team_name, pick_number)
         )
 
-#scrape_prospects()
+scrape_prospects()
 scrape_teams()
 
 conn.commit()
