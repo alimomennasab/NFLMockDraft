@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model draft_order {
+  id          Int     @id @default(autoincrement())
+  team_name   String? @db.VarChar(50)
+  pick_number Int?
+}
+
+model prospects {
+  id       Int     @id @default(autoincrement())
+  position String? @db.VarChar(10)
+  ranking  Int?
+  name     String? @db.VarChar(100)
+}
