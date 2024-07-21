@@ -26,12 +26,12 @@ driver = Safari()
 
 """Scraping prospects"""
 def scrape_prospects():
-    # Wipe existing data
+    # wipe existing data
     cur.execute("TRUNCATE TABLE prospects RESTART IDENTITY CASCADE;")
     positions = ["QB", "RB", "WR", "TE", "OT", "IOL", "DL", "EDGE", "LB", "CB", "S"]
     prospects = []
 
-    # Place every top 100 prospect in a list
+    # place every top 100 prospect in a list
     for position in positions:
         url = 'https://www.nflmockdraftdatabase.com/big-boards/2025/consensus-big-board-2025?pos=' + position
         driver.get(url)
@@ -52,10 +52,10 @@ def scrape_prospects():
             prospects.append((player_ranking, player_name, position))
             print(f"Added {player_name} (#{player_ranking}) ({position})")
 
-    # Sort all prospects by their overall ranking
+    # sort all prospects by their overall ranking
     prospects.sort(key=lambda x: x[0])
 
-    # Insert sorted prospects into the database
+    # insert sorted prospects into the database
     for player_ranking, player_name, position in prospects:
         cur.execute(
             "INSERT INTO prospects (position, ranking, name) VALUES (%s, %s, %s)",
@@ -126,12 +126,31 @@ def scrape_teams():
     print("Scraping teams complete")
 
 
-""" Scraping a draft capital trade value chart (Jimmy Johnson's Trade Chart) """
+""" Scraping draft capital trade value chart (Jimmy Johnson's Trade Chart) """
 def scrape_trade_chart():
-    pass
-    
-scrape_prospects()
-scrape_teams()
+    # wipe existing data
+    cur.execute("TRUNCATE TABLE trade_chart RESTART IDENTITY CASCADE;")
+
+    url = 'https://raw.githubusercontent.com/leesharpe/nfldata/master/data/draft_values.csv'
+    driver.get(url)
+    raw_data = driver.find_element(By.XPATH, '//pre')
+    raw_text = raw_data.text
+    lines = raw_text.strip().split('\n')
+    pick_values = []
+    for i in range (1, len(lines)): # skip the header title line
+        words = lines[i].split(',')
+        pick_val = words[2].strip()  # in the csv file, the third elem of each row is the desired Jimmy Johnson trade value
+        pick_values.append(pick_val)
+        cur.execute(
+                "INSERT INTO trade_chart (pick_number, value) VALUES (%s, %s)",
+                (i, pick_val)
+            )
+        print("Added ", pick_val)
+
+    print("Amount of Jimmy Johnson draft values: ", len(pick_values))
+
+#scrape_prospects()
+#scrape_teams()
 scrape_trade_chart()
 
 conn.commit()

@@ -25,3 +25,8 @@ model draft_capital {
   team_name String  @db.VarChar(50)
   picks     Int[]   @db.Integer
 }
+
+model trade_chart {
+  pick_number Int @id
+  value       Int
+}

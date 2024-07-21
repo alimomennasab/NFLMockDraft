@@ -27,3 +27,14 @@ export async function getDraftCapital(): Promise<{ team_name: string, picks: num
     picks: record.picks,
   }));
 }
+
+export async function getTradeChart(): Promise<{ [key: number]: number }> {
+  const tradeChartRecords = await prisma.trade_chart.findMany();
+  const tradeChartDictionary: { [key: number]: number } = {};
+
+  tradeChartRecords.forEach(record => {
+    tradeChartDictionary[record.pick_number] = record.value;
+  });
+
+  return tradeChartDictionary;
+}
