@@ -1,5 +1,5 @@
 import * as readline from 'readline';
-import { getDraftOrder, getProspects } from './database';
+import { getDraftOrder, getProspects, getDraftCapital } from './database';
 
 type DraftOrder = { [key: number]: string };
 

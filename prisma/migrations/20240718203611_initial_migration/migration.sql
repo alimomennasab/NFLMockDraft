@@ -16,3 +16,12 @@ CREATE TABLE "prospects" (
 
     CONSTRAINT "prospects_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "draft_capital" (
+    "id" SERIAL NOT NULL,
+    "team_name" VARCHAR(50),
+    "picks" INTEGER[],
+
+    CONSTRAINT "draft_capital_pkey" PRIMARY KEY ("id")
+);

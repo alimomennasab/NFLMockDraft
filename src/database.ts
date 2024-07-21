@@ -19,3 +19,11 @@ export async function getProspects(): Promise<string[]> {
     .filter(record => record.name !== null)
     .map(record => record.name as string);
 }
+
+export async function getDraftCapital(): Promise<{ team_name: string, picks: number[] }[]> {
+  const draftCapitalRecords = await prisma.draft_capital.findMany();
+  return draftCapitalRecords.map(record => ({
+    team_name: record.team_name,
+    picks: record.picks,
+  }));
+}
