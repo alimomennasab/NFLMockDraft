@@ -48,7 +48,7 @@ function draft() {
         let currPick = 1;
         console.log('The 2025 NFL draft has begun!\n');
         while (Object.keys(draftOrder).length > 0) {
-            console.log(`The ${draftOrder[currPick]} are on the clock with pick #${currPick}.\n`);
+            console.log(`${draftOrder[currPick]} are on the clock with pick #${currPick}.\n`);
             console.log('Draft Choices:');
             console.log('1. Make a Pick');
             console.log('2. Make a Trade');
@@ -59,7 +59,7 @@ function draft() {
                     console.log('The available prospects are: ');
                     for (let i = 0; i < prospects.length; i++) {
                         if (prospects[i]) {
-                            console.log(`${i + 1}: ${prospects[i]}`);
+                            console.log(`${i + 1}: ${prospects[i]} ()`);
                         }
                     }
                     let prospectSelection = parseInt(yield askQuestion('Select the number of the prospect: '));

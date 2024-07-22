@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDraftOrder = getDraftOrder;
 exports.getProspects = getProspects;
+exports.getDraftCapital = getDraftCapital;
+exports.getTradeChart = getTradeChart;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function getDraftOrder() {
@@ -31,5 +33,24 @@ function getProspects() {
         return prospectsRecords
             .filter(record => record.name !== null)
             .map(record => record.name);
+    });
+}
+function getDraftCapital() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const draftCapitalRecords = yield prisma.draft_capital.findMany();
+        return draftCapitalRecords.map(record => ({
+            team_name: record.team_name,
+            picks: record.picks,
+        }));
+    });
+}
+function getTradeChart() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const tradeChartRecords = yield prisma.trade_chart.findMany();
+        const tradeChartDictionary = {};
+        tradeChartRecords.forEach(record => {
+            tradeChartDictionary[record.pick_number] = record.value;
+        });
+        return tradeChartDictionary;
     });
 }
