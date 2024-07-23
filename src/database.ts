@@ -13,12 +13,16 @@ export async function getDraftOrder(): Promise<{ [key: number]: string }> {
   return draftOrder;
 }
 
-export async function getProspects(): Promise<string[]> {
+export async function getProspects(): Promise<{ name: string, position: string }[]> {
   const prospectsRecords = await prisma.prospects.findMany();
   return prospectsRecords
     .filter(record => record.name !== null)
-    .map(record => record.name as string);
+    .map(record => ({
+      name: record.name as string,
+      position: record.position as string
+    }));
 }
+
 
 export async function getDraftCapital(): Promise<{ team_name: string, picks: number[] }[]> {
   const draftCapitalRecords = await prisma.draft_capital.findMany();

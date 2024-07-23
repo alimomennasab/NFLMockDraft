@@ -39,7 +39,7 @@ function draft() {
                         console.log('The available prospects are: ');
                         for (let i = 0; i < prospects.length; i++) {
                             if (prospects[i]) {
-                                console.log(`${i + 1}: ${prospects[i]} ()`);
+                                console.log(`${i + 1}: ${prospects[i].name} (${prospects[i].position})`);
                             }
                         }
                         let prospectSelection = parseInt(yield (0, readlineInterface_1.askQuestion)('Select the number of the prospect: '));

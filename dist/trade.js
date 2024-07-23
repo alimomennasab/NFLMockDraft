@@ -67,7 +67,7 @@ function trade(draftCapital) {
             team2.picks = team2.picks.filter(pick => !team2Picks.includes(pick)).concat(team1Picks).sort((a, b) => a - b);
             console.log(`${team1Name}'s new draft capital:`, team1.picks);
             console.log(`${team2Name}'s new draft capital:`, team2.picks);
-            return team2Name; // Return the name of the team that should be on the clock
+            return team2Name; // return the new team that holds the current pick
         }
         else {
             if (team1Value > team2Value) {
@@ -76,7 +76,7 @@ function trade(draftCapital) {
             else {
                 console.log(`${team1Name} needs to give up around ${difference} points of value`);
             }
-            return null; // Return null if the trade was not successful
+            return null;
         }
     });
 }

@@ -5,7 +5,7 @@ import { rl, askQuestion } from './readlineInterface';
 
 async function draft() {
   let draftCapital = await getDraftCapital();
-  let prospects: string[] = await getProspects();
+  let prospects: { name: string, position: string }[] = await getProspects();
   let numRounds: number = parseInt(await askQuestion('Enter the number of rounds (1-7): '));
 
   console.log(`You entered: ${numRounds}`);
@@ -36,7 +36,7 @@ async function draft() {
           console.log('The available prospects are: ');
           for (let i = 0; i < prospects.length; i++) {
             if (prospects[i]) {
-              console.log(`${i + 1}: ${prospects[i]} ()`);
+              console.log(`${i + 1}: ${prospects[i].name} (${prospects[i].position})`);
             }
           }
           let prospectSelection: number = parseInt(

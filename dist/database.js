@@ -32,7 +32,10 @@ function getProspects() {
         const prospectsRecords = yield prisma.prospects.findMany();
         return prospectsRecords
             .filter(record => record.name !== null)
-            .map(record => record.name);
+            .map(record => ({
+            name: record.name,
+            position: record.position
+        }));
     });
 }
 function getDraftCapital() {
