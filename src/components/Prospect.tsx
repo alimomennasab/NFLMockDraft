@@ -14,7 +14,7 @@ const Prospect: React.FC<ProspectProps> = ({ pickNumber, prospectName, position,
         #{pickNumber}
       </div>
       <div className='bg-white w-56 h-12 border-white flex rounded border items-center justify-start text-lg'>
-        {prospectName} ({position})
+        {prospectName} <span>&nbsp;</span><span className="italic">{position}</span>
       </div>
       <div className='bg-white w-12 h-12 border-black border m-1 rounded-full flex items-center justify-center'>
         <img src={logoURL} alt="Img" className="w-full h-full object-cover rounded-full" />
