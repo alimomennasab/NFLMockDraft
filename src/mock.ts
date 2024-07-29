@@ -1,16 +1,21 @@
-import * as readline from 'readline';
 import { getProspects, getDraftCapital } from './database';
 import { trade } from './trade';
-import { rl, askQuestion } from './readlineInterface';
+//import { rl, askQuestion } from './readlineInterface';
+
+export async function getDraftCapitalData() {
+  let draftCapital = await getDraftCapital();
+  return draftCapital;
+}
 
 async function draft() {
   let draftCapital = await getDraftCapital();
   let prospects: { name: string, position: string }[] = await getProspects();
-  let numRounds: number = parseInt(await askQuestion('Enter the number of rounds (1-7): '));
+  //let numRounds: number = parseInt(await askQuestion('Enter the number of rounds (1-7): '));
 
-  console.log(`You entered: ${numRounds}`);
-  const totalPicks = 32 * numRounds;
+  //console.log(`You entered: ${numRounds}`);
+  //const totalPicks = 32 * numRounds;
 
+  {/*
   console.log('The 2025 NFL draft has begun!\n');
   for (let currPick = 1; currPick <= totalPicks; currPick++) {
     let team = draftCapital.find(team => team.picks.includes(currPick));
@@ -75,6 +80,7 @@ async function draft() {
 
   console.log(`Your 2025 NFL mock draft is now complete!`);
   rl.close();
+  */}
 }
 
 draft();
