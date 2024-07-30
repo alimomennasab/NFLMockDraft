@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, horizontalListSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
+import { arrayMove, horizontalListSortingStrategy, rectSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Team from '../components/Team';
 
@@ -77,7 +77,7 @@ const DraftOrderGrid: React.FC<DraftOrderGridProps> = ({ draftCapital, setDraftC
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext items={draftCapital} strategy={horizontalListSortingStrategy}>
+      <SortableContext items={draftCapital} strategy={rectSortingStrategy}>
         <div className='grid grid-cols-4 gap-2'>
           {draftCapital.map((item) => (
             <SortableItem key={item.id} {...item} />
