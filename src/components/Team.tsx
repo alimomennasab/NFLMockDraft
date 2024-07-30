@@ -15,8 +15,8 @@ const Team: React.FC<TeamProps> = ({ pickNumber, teamName, logoURL }) => {
       <div className='bg-white max-w-30 w-16 flex-1 h-12 border-white flex rounded border items-center justify-start text-lg text-gray-600 px-2'>
         {teamName}
       </div>
-      <div className='bg-white w-12 h-12 border-black border m-2 rounded-full flex items-center justify-center'>
-        <img src={logoURL} alt="Team Logo" className="w-full h-full object-cover rounded-full" />
+      <div className='bg-white w-12 h-12 m-2 rounded-full flex items-center justify-center'>
+        <img src={logoURL} alt="Team Logo" className="w-full h-full object-contain rounded-full" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, horizontalListSortingStrategy, rectSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
+import { arrayMove, rectSortingStrategy, SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Team from '../components/Team';
 
@@ -40,7 +40,7 @@ const SortableItem = ({ id, team, pick }: DraggableTeam) => {
       <Team
         pickNumber={pick}
         teamName={team.team_name}
-        logoURL={'images/mizzou.png'}
+        logoURL={`/images/${team.team_name}.png`}
       />
     </div>
   );
