@@ -7,6 +7,11 @@ export async function getDraftCapitalData() {
   return draftCapital;
 }
 
+export async function getProspectsData() {
+  let prospects = await getProspects();
+  return prospects;
+}
+
 async function draft() {
   let draftCapital = await getDraftCapital();
   let prospects: { name: string, position: string }[] = await getProspects();

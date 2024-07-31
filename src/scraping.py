@@ -28,38 +28,36 @@ driver = Safari()
 def scrape_prospects():
     # wipe existing data
     cur.execute("TRUNCATE TABLE prospects RESTART IDENTITY CASCADE;")
-    positions = ["QB", "RB", "WR", "TE", "OT", "IOL", "DL", "EDGE", "LB", "CB", "S"]
+    url = 'https://www.nflmockdraftdatabase.com/big-boards/2025/consensus-big-board-2025'
+    driver.get(url)
+
+    players = driver.find_elements(By.XPATH, '//div[@class="player-name player-name-smaller"]')
+    rankings = driver.find_elements(By.XPATH, '//div[@class="pick-number with-subtitle"]')
+    details = driver.find_elements(By.XPATH, '//div[@class="player-details college-details"]')
+
     prospects = []
+    num_players = min(len(players), len(rankings), len(details))
 
-    # place every top 100 prospect in a list
-    for position in positions:
-        url = 'https://www.nflmockdraftdatabase.com/big-boards/2025/consensus-big-board-2025?pos=' + position
-        driver.get(url)
-        print("Position: ", position)
+    for i in range(num_players):
+        if i > 100:
+            break
 
-        players = driver.find_elements(By.XPATH, '//div[@class="player-name player-name-smaller"]')
-        rankings = driver.find_elements(By.XPATH, '//div[@class="pick-number with-subtitle"]')
-        print(f"Players: {len(players)} , Rankings: {len(rankings)}")
+        player_name = players[i].text
+        player_ranking = int(rankings[i].text)
+        detail_text = details[i].text.split(' | ')[0]  # position
+        school = details[i].find_element(By.TAG_NAME, 'a').text  # school
 
-        num_players = min(len(players), len(rankings))
-
-        for p in range(num_players):
-            player_name = players[p].text
-            player_ranking = int(rankings[p].text)
-            if player_ranking > 100:
-                print("Skipping rest of ", position)
-                break
-            prospects.append((player_ranking, player_name, position))
-            print(f"Added {player_name} (#{player_ranking}) ({position})")
+        prospects.append((player_ranking, player_name, detail_text, school))
+        print(f"Added {player_name} (#{player_ranking}) ({detail_text}) {school}")
 
     # sort all prospects by their overall ranking
     prospects.sort(key=lambda x: x[0])
 
     # insert sorted prospects into the database
-    for player_ranking, player_name, position in prospects:
+    for player_ranking, player_name, position, school in prospects:
         cur.execute(
-            "INSERT INTO prospects (position, ranking, name) VALUES (%s, %s, %s)",
-            (position, player_ranking, player_name)
+            "INSERT INTO prospects (ranking, name, position, school) VALUES (%s, %s, %s, %s)",
+            (player_ranking, player_name, position, school)
         )
     
     print("Prospect scraping complete")
