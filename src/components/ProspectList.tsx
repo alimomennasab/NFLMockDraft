@@ -41,10 +41,10 @@ const ProspectList: React.FC = () => {
     (positionFilter === '' || prospect.position === positionFilter)
   );
 
-  const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB']
+  const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
   return (
-    <div className="h-full">
+    <div className="flex flex-col h-full">
       <TextField
         label="Search prospects"
         variant="outlined"
@@ -70,7 +70,7 @@ const ProspectList: React.FC = () => {
           </MenuItem>
         ))}
       </Select>
-      <div className="overflow-y-auto">
+      <div className="h-4/6 overflow-y-auto border border-gray-300 rounded-lg">
         {filteredProspects.map((prospect) => (
           <Prospect
             key={prospect.ranking}
