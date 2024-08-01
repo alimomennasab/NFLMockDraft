@@ -12,7 +12,7 @@ export interface ProspectProps {
 
 const ProspectList: React.FC = () => {
   const [prospects, setProspects] = useState<ProspectProps[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchPlayer, setSearchPlayer] = useState('');
   const [positionFilter, setPositionFilter] = useState('');
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ProspectList: React.FC = () => {
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
+    setSearchPlayer(event.target.value);
   };
 
   const handlePositionChange = (event: SelectChangeEvent<string>) => {
@@ -37,18 +37,18 @@ const ProspectList: React.FC = () => {
   };
 
   const filteredProspects = prospects.filter(prospect =>
-    prospect.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+    prospect.name.toLowerCase().includes(searchPlayer.toLowerCase()) &&
     (positionFilter === '' || prospect.position === positionFilter)
   );
 
-  const uniquePositions = Array.from(new Set(prospects.map(prospect => prospect.position)));
+  const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB']
 
   return (
     <div className="h-full">
       <TextField
         label="Search prospects"
         variant="outlined"
-        value={searchQuery}
+        value={searchPlayer}
         onChange={handleSearchChange}
         className="mb-4"
         fullWidth
@@ -61,9 +61,13 @@ const ProspectList: React.FC = () => {
         fullWidth
         className="mb-4"
       >
-        <MenuItem value="">All Positions</MenuItem>
-        {uniquePositions.map(position => (
-          <MenuItem key={position} value={position}>{position}</MenuItem>
+        <MenuItem value="">
+          All Positions
+        </MenuItem>
+        {positions.map(position => (
+          <MenuItem key={position} value={position}>
+            {position}
+          </MenuItem>
         ))}
       </Select>
       <div className="overflow-y-auto">
