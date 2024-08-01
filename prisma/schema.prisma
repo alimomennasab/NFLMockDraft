@@ -18,6 +18,7 @@ model prospects {
   position String? @db.VarChar(10)
   ranking  Int?
   name     String? @db.VarChar(100)
+  school   String? @db.VarChar(100)
 }
 
 model draft_capital {

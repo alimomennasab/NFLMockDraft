@@ -4,10 +4,10 @@ interface ProspectProps {
   rank: number;
   prospectName: string;
   position: string;
-  logoURL: string;
+  school: string;
 }
 
-const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position }) => {
+const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, school }) => {
   return (
     <div className="bg-white w-96 h-16 border-black rounded border flex flex-row justify-left items-center">
       <div className="bg-white w-8 h-12 border-white flex rounded border ml-2 items-center justify-start text-lg font-bold">
@@ -19,7 +19,7 @@ const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position }) => 
           {prospectName}
         </div>
         <div className='text-gray-700'>
-          Missouri | {position}
+          {school} | {position}
         </div>
       </div>
 

@@ -1,16 +1,5 @@
 import { getProspects, getDraftCapital } from './database';
 import { trade } from './trade';
-//import { rl, askQuestion } from './readlineInterface';
-
-export async function getDraftCapitalData() {
-  let draftCapital = await getDraftCapital();
-  return draftCapital;
-}
-
-export async function getProspectsData() {
-  let prospects = await getProspects();
-  return prospects;
-}
 
 async function draft() {
   let draftCapital = await getDraftCapital();
