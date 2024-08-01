@@ -83,7 +83,8 @@ export default function Page() {
             </div>
           </div>
         </div>
-      ) : (
+      ) : ( 
+// Draft Page
         <div className='border border-gray-200 rounded-lg p-6 shadow-lg w-full h-full md:w-auto'>
           <h1>Draft Page</h1>
           <p>Number of rounds: {selectedRound}</p>

@@ -15,6 +15,7 @@ export interface ProspectListProps {
 
 const ProspectList: React.FC = () => {
   const [prospects, setProspects] = useState<ProspectProps[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchProspects = async () => {
@@ -29,17 +30,34 @@ const ProspectList: React.FC = () => {
     fetchProspects();
   }, []);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredProspects = prospects.filter(prospect =>
+    prospect.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="h-full overflow-y-auto">
-      {prospects.map((prospect) => (
-        <Prospect
-          key={prospect.ranking}
-          rank={prospect.ranking}
-          prospectName={prospect.name}
-          position={prospect.position}
-          school={prospect.school}
-        />
-      ))}
+    <div className="h-full">
+      <input
+        type="text"
+        placeholder="Search prospects"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        className="mb-4 p-2 border rounded"
+      />
+      <div className="overflow-y-auto">
+        {filteredProspects.map((prospect) => (
+          <Prospect
+            key={prospect.ranking}
+            rank={prospect.ranking}
+            prospectName={prospect.name}
+            position={prospect.position}
+            school={prospect.school}
+          />
+        ))}
+      </div>
     </div>
   );
 };
