@@ -32,20 +32,26 @@ def scrape_prospects():
     driver.get(url)
 
     players = driver.find_elements(By.XPATH, '//div[@class="player-name player-name-smaller"]')
-    rankings = driver.find_elements(By.XPATH, '//div[@class="pick-number with-subtitle"]')
+    # website has different classes for numbers under and above 99
+    under_99_rankings = driver.find_elements(By.XPATH, '//div[@class="pick-number with-subtitle"]')
+    over_99_rankings = driver.find_elements(By.XPATH, '//div[@class="pick-number with-subtitle large-pick-number"]')
     details = driver.find_elements(By.XPATH, '//div[@class="player-details college-details"]')
 
+    print(f"Found {len(players)} players, {len(under_99_rankings)} rankings, {len(over_99_rankings)}, {len(details)} details")
+
     prospects = []
+    rankings = under_99_rankings + over_99_rankings
     num_players = min(len(players), len(rankings), len(details))
 
-    for i in range(num_players):
-        if i > 100:
+    for i in range(min(num_players, 200)):
+        if i > 200:
             break
 
         player_name = players[i].text
         player_ranking = int(rankings[i].text)
         detail_text = details[i].text.split(' | ')[0]  # position
         school = details[i].find_element(By.TAG_NAME, 'a').text  # school
+
 
         prospects.append((player_ranking, player_name, detail_text, school))
         print(f"Added {player_name} (#{player_ranking}) ({detail_text}) {school}")
@@ -148,8 +154,8 @@ def scrape_trade_chart():
     print("Amount of Jimmy Johnson draft values: ", len(pick_values))
 
 scrape_prospects()
-scrape_teams()
-scrape_trade_chart()
+#scrape_teams()
+#scrape_trade_chart()
 
 conn.commit()
 cur.close()
