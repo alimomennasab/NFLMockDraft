@@ -86,12 +86,19 @@ export default function Page() {
         </div>
       ) : ( 
 // Draft Page
-        <div className='border border-gray-200 rounded-lg p-6 shadow-lg w-full h-full'>
-          <h1>Draft Page</h1>
-          <p>Number of rounds: {selectedRounds}</p>
-          <ProspectList />
-          <DraftOrderList rounds={selectedRounds}></DraftOrderList>
+      <div className="flex justify-center items-start h-screen p-4">
+        <div className="flex w-full h-full space-x-4 border border-gray-200 rounded-lg">
+          <div className="w-1/2">
+            <DraftOrderList rounds={selectedRounds} />
+          </div>
+          <div className="w-1/2 border border-gray-200 rounded-lg mt-2 flex flex-col ">
+            <Button className='bg-green-600 text-white flex flex-grow justify-center max-w rounded-lg hover:bg-green-700 m-2'>
+              Offer Trade
+            </Button>
+            <ProspectList />
+          </div>
         </div>
+      </div>
       )}
     </div>
   );

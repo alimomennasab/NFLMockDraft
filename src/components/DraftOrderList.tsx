@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Team from './Team';
+import TeamInDraft from './TeamInDraft';
 
 interface TeamProps {
   team_name: string;
@@ -37,10 +38,10 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ rounds }) => {
   ).sort((a, b) => a.pick - b.pick).slice(0, numPicks);
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto">
+    <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
       {limitedDraftOrder.map((team, index) => (
         <div key={index} className="border-b border-gray-300 p-2">
-          <Team 
+          <TeamInDraft 
             pickNumber={team.pick} 
             teamName={team.team_name} 
             logoURL={`/images/${team.team_name}.png`} 

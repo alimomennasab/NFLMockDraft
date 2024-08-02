@@ -1,3 +1,4 @@
+// Prospect.tsx
 import React from 'react';
 import { Button } from '@mui/material';
 
@@ -10,12 +11,12 @@ interface ProspectProps {
 
 const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, school }) => {
   return (
-    <div className="bg-white w-96 h-16 border-black rounded border flex flex-row justify-left items-center m-2">
+    <div className="bg-white w-92 h-16 border-black rounded border flex flex-row justify-center items-center mb-2">
       <div className="bg-white w-8 h-12 border-white flex rounded border ml-2 items-center justify-start text-lg font-bold">
         {rank}
       </div>
 
-      <div className='flex flex-col p-2 text-left w-56'>
+      <div className='flex flex-col p-2 text-left flex-grow'>
         <div className='bg-white flex-1 h-12 border-white flex items-center text-lg text-gray-700 font-bold'>
           {prospectName}
         </div>

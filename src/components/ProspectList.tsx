@@ -1,3 +1,4 @@
+// ProspectList.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
 import Prospect from "./Prospect";
@@ -44,33 +45,36 @@ const ProspectList: React.FC = () => {
   const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
   return (
-    <div className="flex flex-col h-full">
-      <TextField
-        label="Search prospects"
-        variant="outlined"
-        value={searchPlayer}
-        onChange={handleSearchChange}
-        className="mb-4"
-        fullWidth
-      />
-      <Select
-        value={positionFilter}
-        onChange={handlePositionChange}
-        displayEmpty
-        variant="outlined"
-        fullWidth
-        className="mb-4"
-      >
-        <MenuItem value="">
-          All Positions
-        </MenuItem>
-        {positions.map(position => (
-          <MenuItem key={position} value={position}>
-            {position}
+    <div className="flex flex-col h-full w-96 ">
+      <div className="h-1/2 pr-2 pl-2 flex-grow overflow-y-auto">
+        <TextField
+          label="🔍 Search Players"
+          variant="outlined"
+          value={searchPlayer}
+          onChange={handleSearchChange}
+          className="mb-1"
+          fullWidth
+        />
+        <Select
+          value={positionFilter}
+          onChange={handlePositionChange}
+          displayEmpty
+          variant="outlined"
+          fullWidth
+          className="mb-2 w-92"
+        >
+          <MenuItem value="" className='text-gray-300'>
+            <h1 className='text-gray-500'>
+              All Positions
+            </h1>
           </MenuItem>
-        ))}
-      </Select>
-      <div className="h-4/6 overflow-y-auto border border-gray-300 rounded-lg">
+          {positions.map(position => (
+            <MenuItem key={position} value={position}>
+              {position}
+            </MenuItem>
+          ))}
+        </Select>
+
         {filteredProspects.map((prospect) => (
           <Prospect
             key={prospect.ranking}
