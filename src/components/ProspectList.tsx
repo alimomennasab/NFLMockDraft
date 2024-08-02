@@ -45,8 +45,8 @@ const ProspectList: React.FC = () => {
   const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
   return (
-    <div className="flex flex-col h-full w-96 ">
-      <div className="h-1/2 pr-2 pl-2 flex-grow overflow-y-auto">
+    <div className="flex flex-col h-full w-full">
+      <div className="p-2">
         <TextField
           label="🔍 Search Players"
           variant="outlined"
@@ -61,12 +61,10 @@ const ProspectList: React.FC = () => {
           displayEmpty
           variant="outlined"
           fullWidth
-          className="mb-2 w-92"
+          className=""
         >
           <MenuItem value="" className='text-gray-300'>
-            <h1 className='text-gray-500'>
-              All Positions
-            </h1>
+            <span className='text-gray-500'>All Positions</span>
           </MenuItem>
           {positions.map(position => (
             <MenuItem key={position} value={position}>
@@ -74,7 +72,8 @@ const ProspectList: React.FC = () => {
             </MenuItem>
           ))}
         </Select>
-
+      </div>
+      <div className="flex-grow overflow-y-auto p-2 h-0">
         {filteredProspects.map((prospect) => (
           <Prospect
             key={prospect.ranking}
