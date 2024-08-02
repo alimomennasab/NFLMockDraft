@@ -5,6 +5,7 @@ import DraftOrderGrid, { TeamData, DraggableTeam } from '../components/DraftOrde
 import ResetDraftButton from '../components/ResetDraftButton';
 import SetRoundButtonGroup from '../components/SetRoundButtonGroup'; 
 import ProspectList from '../components/ProspectList';
+import DraftOrderList from '../components/DraftOrderList';
 
 export default function Page() {
   const [draftCapital, setDraftCapital] = useState<DraggableTeam[]>([]);
@@ -89,6 +90,7 @@ export default function Page() {
           <h1>Draft Page</h1>
           <p>Number of rounds: {selectedRound}</p>
           <ProspectList />
+          <DraftOrderList rounds={1}></DraftOrderList>
         </div>
       )}
     </div>
