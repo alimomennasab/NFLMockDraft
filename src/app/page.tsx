@@ -1,3 +1,4 @@
+// Page.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
@@ -19,7 +20,6 @@ export default function Page() {
         const response = await fetch('/api/draftCapital');
         const capital: TeamData[] = await response.json();
 
-        // use api to get the first 32 picks and their corresponding teams
         let pickCounter = 1; // initialize the pick counter
 
         const draggableTeams = capital.flatMap(team =>
@@ -76,7 +76,7 @@ export default function Page() {
                 <ResetDraftButton onRestart={handleReset} />
                 <Button 
                   className='bg-green-600 text-white p-3 flex justify-center max-w-sm m-3 rounded-lg hover:bg-green-700'
-                  onClick={startDraft} // Add onClick handler to start the draft
+                  onClick={startDraft}
                 >
                   Start Draft
                 </Button>
@@ -89,7 +89,7 @@ export default function Page() {
       <div className="flex justify-center items-start h-screen p-4">
         <div className="flex w-full h-full space-x-4 border border-gray-200 rounded-lg">
           <div className="w-1/2">
-            <DraftOrderList rounds={selectedRounds} />
+            <DraftOrderList draftCapital={draftCapital} rounds={selectedRounds} />
           </div>
           <div className="w-1/2 border border-gray-200 rounded-lg mt-2 flex flex-col ">
             <Button className='bg-green-600 text-white flex flex-grow justify-center max-w rounded-lg hover:bg-green-700 m-2'>

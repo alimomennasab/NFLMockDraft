@@ -1,41 +1,15 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import Team from './Team';
+import React from 'react';
 import TeamInDraft from './TeamInDraft';
-
-interface TeamProps {
-  team_name: string;
-  picks: number[];
-}
+import { DraggableTeam } from './DraftOrderGrid';
 
 interface DraftOrderListProps {
+  draftCapital: DraggableTeam[];
   rounds: number;
 }
 
-const DraftOrderList: React.FC<DraftOrderListProps> = ({ rounds }) => {
-  const [draftOrder, setDraftOrder] = useState<TeamProps[]>([]);
-
-  useEffect(() => {
-    const fetchDraftOrder = async () => {
-      try {
-        const response = await fetch('/api/teams');
-        const data: TeamProps[] = await response.json();
-        setDraftOrder(data);
-      } catch (error) {
-        console.error('Failed to fetch draft order:', error);
-      }
-    };
-    fetchDraftOrder();
-  }, []);
-
-  // Remove any picks beyond the selected number of rounds
-  const numPicks = rounds * 32;
-  const limitedDraftOrder = draftOrder.flatMap(team =>
-    (team.picks || []).map(pick => ({
-      team_name: team.team_name,
-      pick,
-    }))
-  ).sort((a, b) => a.pick - b.pick).slice(0, numPicks);
+const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds }) => {
+  const limitedDraftOrder = draftCapital.slice(0, rounds * 32);
 
   return (
     <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
@@ -43,8 +17,8 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ rounds }) => {
         <div key={index} className="border-b border-gray-300 p-2">
           <TeamInDraft 
             pickNumber={team.pick} 
-            teamName={team.team_name} 
-            logoURL={`/images/${team.team_name}.png`} 
+            teamName={team.team.team_name} 
+            logoURL={`/images/${team.team.team_name}.png`} 
           />
         </div>
       ))}
