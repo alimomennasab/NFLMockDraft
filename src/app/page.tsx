@@ -1,4 +1,3 @@
-// Page.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
@@ -7,6 +6,7 @@ import ResetDraftButton from '../components/ResetDraftButton';
 import SetRoundButtonGroup from '../components/SetRoundButtonGroup'; 
 import ProspectList from '../components/ProspectList';
 import DraftOrderList from '../components/DraftOrderList';
+import TradeButton from '../components/TradeButton';
 
 export default function Page() {
   const [draftCapital, setDraftCapital] = useState<DraggableTeam[]>([]);
@@ -23,12 +23,14 @@ export default function Page() {
         let pickCounter = 1; // initialize the pick counter
 
         const draggableTeams = capital.flatMap(team =>
-          team.picks.filter(pick => pick <= 32).map(() => ({
-            id: `${team.team_name}-${pickCounter}`, // assign a unique ID based on pickCounter
+          team.picks.map(pick => ({
+            id: `${team.team_name}-${pick}`, // assign a unique ID based on pickCounter
             team,
-            pick: pickCounter++ // assign the overall pick number
+            pick: pick // assign the overall pick number
           }))
         );
+
+        draggableTeams.sort((a, b) => a.pick - b.pick); // sort the teams by pick number
 
         setDraftCapital(draggableTeams);
         setInitialDraftCapital(draggableTeams); // save the initial state
@@ -52,6 +54,9 @@ export default function Page() {
     setDraftStarted(true); 
   };
 
+  // only show the first round for the draft grid
+  const limitedDraftCapital = draftCapital.slice(0, 32);
+
   return (
     <div className='flex justify-center items-center h-screen flex-col'>
       {!draftStarted ? (
@@ -65,7 +70,7 @@ export default function Page() {
             </div>
 
             <div className='md:max-w-5xl justify-center border border-gray-300 items-center p-4 rounded-lg w-full'>
-              <DraftOrderGrid draftCapital={draftCapital} setDraftCapital={setDraftCapital} />
+              <DraftOrderGrid draftCapital={limitedDraftCapital} setDraftCapital={setDraftCapital} />
             </div>
 
             <div className='flex flex-col items-center mt-3 w-full'>
@@ -92,9 +97,7 @@ export default function Page() {
             <DraftOrderList draftCapital={draftCapital} rounds={selectedRounds} />
           </div>
           <div className="w-1/2 border border-gray-200 rounded-lg mt-2 flex flex-col ">
-            <Button className='bg-green-600 text-white flex flex-grow justify-center max-w rounded-lg hover:bg-green-700 m-2'>
-              Offer Trade
-            </Button>
+            <TradeButton />
             <ProspectList />
           </div>
         </div>
