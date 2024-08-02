@@ -10,7 +10,7 @@ import DraftOrderList from '../components/DraftOrderList';
 export default function Page() {
   const [draftCapital, setDraftCapital] = useState<DraggableTeam[]>([]);
   const [initialDraftCapital, setInitialDraftCapital] = useState<DraggableTeam[]>([]);
-  const [selectedRound, setSelectedRound] = useState(1); 
+  const [selectedRounds, setSelectedRounds] = useState(1); 
   const [draftStarted, setDraftStarted] = useState(false); 
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function Page() {
   };
 
   const handleRoundChange = (round: number) => {
-    setSelectedRound(round); 
+    setSelectedRounds(round); 
   };
 
   const startDraft = () => {
@@ -86,11 +86,11 @@ export default function Page() {
         </div>
       ) : ( 
 // Draft Page
-        <div className='border border-gray-200 rounded-lg p-6 shadow-lg w-full h-full md:w-auto'>
+        <div className='border border-gray-200 rounded-lg p-6 shadow-lg w-full h-full'>
           <h1>Draft Page</h1>
-          <p>Number of rounds: {selectedRound}</p>
+          <p>Number of rounds: {selectedRounds}</p>
           <ProspectList />
-          <DraftOrderList rounds={1}></DraftOrderList>
+          <DraftOrderList rounds={selectedRounds}></DraftOrderList>
         </div>
       )}
     </div>
