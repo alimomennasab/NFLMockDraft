@@ -63,7 +63,14 @@ const DraftOrderGrid: React.FC<DraftOrderGridProps> = ({ draftCapital, setDraftC
         const newItems = arrayMove(items, oldIndex, newIndex);
         return newItems.map((item, index) => ({
           ...item,
-          pick: index + 1
+          pick: index + 1,
+          team: {
+            ...item.team,
+            picks: item.team.picks.map((pick, pickIndex) => 
+              pickIndex === 0 ? index + 1 : pick
+            )
+          },
+          id: `${item.team.team_name}-${index + 1}`
         }));
       });
     }
