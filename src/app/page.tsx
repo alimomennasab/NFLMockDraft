@@ -1,13 +1,14 @@
-'use client';
+"use client"
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
-import DraftOrderGrid, { DraggableTeam, TeamData } from '../components/DraftOrderGrid';
+import DraftOrderGrid, { DraggableTeam } from '../components/DraftOrderGrid';
 import ResetDraftButton from '../components/ResetDraftButton';
 import SetRoundButtonGroup from '../components/SetRoundButtonGroup';
 import ProspectList from '../components/ProspectList';
 import DraftOrderList from '../components/DraftOrderList';
 import TradeButton from '../components/TradeButton';
 import TradeWindow from '../components/TradeWindow';
+import { DraftCapital } from '../trade';
 
 export default function Page() {
   const [draftCapital, setDraftCapital] = useState<DraggableTeam[]>([]);
@@ -21,7 +22,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const response = await fetch('/api/draftCapital');
-        const capital: TeamData[] = await response.json();
+        const capital: DraftCapital[] = await response.json();
 
         const draggableTeams = capital.flatMap(team =>
           team.picks.map(pick => ({
@@ -54,23 +55,27 @@ export default function Page() {
     setDraftStarted(true);
   };
 
-  const handleTradeSubmit = (updatedTeams: TeamData[]) => {
+  const handleTradeSubmit = (updatedTeams: DraftCapital[]) => {
     console.log("Trade submitted. Updated teams:", updatedTeams);
   
-    const updatedDraftCapital = draftCapital.map(dc => {
-      const updatedTeam = updatedTeams.find(team => team.team_name === dc.team.team_name);
-      if (updatedTeam) {
-        return {
-          ...dc,
-          team: updatedTeam,
-          pick: updatedTeam.picks.includes(dc.pick) ? dc.pick : updatedTeam.picks.find(p => !draftCapital.some(existingDc => existingDc.team.team_name === updatedTeam.team_name && existingDc.pick === p)) || dc.pick
-        };
-      }
-      return dc;
-    });
+    const updatedDraftCapital = updatedTeams.flatMap(team =>
+      team.picks.map(pick => ({
+        id: `${team.team_name}-${pick}`,
+        team,
+        pick
+      }))
+    );
   
-    console.log("Updated draft capital:", updatedDraftCapital);
-    setDraftCapital(updatedDraftCapital);
+    // Remove duplicates based on the 'id' property
+    const uniqueUpdatedDraftCapital = Array.from(
+      new Map(updatedDraftCapital.map(item => [item.id, item])).values()
+    );
+  
+    // Sort the unique updated draft capital by pick number
+    uniqueUpdatedDraftCapital.sort((a, b) => a.pick - b.pick);
+  
+    console.log("Updated draft capital:", uniqueUpdatedDraftCapital);
+    setDraftCapital(uniqueUpdatedDraftCapital);
   };
 
   const limitedDraftCapital = draftCapital.slice(0, 32 * selectedRounds);

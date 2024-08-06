@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, Select, MenuItem, Typography, Checkbox, FormControlLabel } from '@mui/material';
-import { TeamData } from './DraftOrderGrid';
-import { trade } from '../trade';
+import { DraftCapital, trade } from '../trade';
 
 interface TradeWindowProps {
   open: boolean;
   onClose: () => void;
-  draftCapital: TeamData[];
-  onTradeSubmit: (updatedTeams: TeamData[]) => void;
+  draftCapital: DraftCapital[];
+  onTradeSubmit: (updatedTeams: DraftCapital[]) => void;
 }
 
 const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, onTradeSubmit }) => {
@@ -24,21 +23,18 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
   }, [open]);
 
   const handleTrade = async () => {
-    const team1Data = draftCapital.find(team => team.team_name === team1);
-    const team2Data = draftCapital.find(team => team.team_name === team2);
-
-    if (team1Data && team2Data) {
-      const result = await trade(team1Data, team2Data, team1Picks, team2Picks);
+    try {
+      const result = await trade(draftCapital, team1, team2, team1Picks, team2Picks);
       setMessage(result.message);
       if (result.success) {
         onTradeSubmit(result.updatedTeams);
         setTimeout(() => {
           setMessage('');
           onClose();
-        }, 3000); // Show message for 3 seconds before closing
+        }, 3000);
       }
-    } else {
-      setMessage('Invalid team selection.');
+    } catch (error) {
+      setMessage((error as Error).message);
     }
   };
 

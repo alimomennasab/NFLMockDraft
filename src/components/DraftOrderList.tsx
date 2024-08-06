@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react';
+import React from 'react';
 import TeamInDraft from './TeamInDraft';
 import { DraggableTeam } from './DraftOrderGrid';
 
@@ -15,14 +15,12 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds })
   const numPicks = rounds * 32;
   const limitedDraftOrder = draftCapital.slice(0, numPicks);
 
-  console.log("Limited draft order:", limitedDraftOrder);
-
   return (
     <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
       {limitedDraftOrder.map((team, index) => (
-        <div key={`${team.id}-${index}`} className="border-b border-gray-300 p-2">
+        <div key={team.id} className="border-b border-gray-300 p-2">
           <TeamInDraft
-            pickNumber={team.pick}
+            pickNumber={index + 1}  // Use the index + 1 as the pick number
             teamName={team.team.team_name}
             logoURL={`/images/${team.team.team_name}.png`}
           />
@@ -32,4 +30,4 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds })
   );
 };
 
-export default DraftOrderList
+export default DraftOrderList;
