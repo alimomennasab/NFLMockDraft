@@ -95,7 +95,11 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
             />
           ))}
         </div>
-        <Button onClick={handleTrade} className="mt-4">Submit Trade</Button>
+        <div className='flex justify-between'>
+            <Button onClick={handleTrade} className="mt-4 bg-green-600 text-white">Submit Trade</Button>
+            <Button onClick={onClose} className="mt-4 bg-red-600 text-white">Exit Trade</Button>
+        </div>
+
         {message && <Typography className="mt-2">{message}</Typography>}
       </Box>
     </Modal>
