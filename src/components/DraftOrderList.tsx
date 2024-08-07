@@ -1,4 +1,4 @@
-"use client";
+// DraftOrderList.tsx
 import React from 'react';
 import TeamInDraft from './TeamInDraft';
 import { DraggableTeam } from './DraftOrderGrid';
@@ -6,12 +6,11 @@ import { DraggableTeam } from './DraftOrderGrid';
 interface DraftOrderListProps {
   draftCapital: DraggableTeam[];
   rounds: number;
+  draftedPlayers: { [key: string]: string };
+  currentPickIndex: number;
 }
 
-const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds }) => {
-  console.log("DraftOrderList render. Draft capital:", draftCapital);
-  console.log("Rounds:", rounds);
-
+const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds, draftedPlayers, currentPickIndex }) => {
   const numPicks = rounds * 32;
   const limitedDraftOrder = draftCapital.slice(0, numPicks);
 
@@ -20,9 +19,11 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds })
       {limitedDraftOrder.map((team, index) => (
         <div key={team.id} className="border-b border-gray-300 p-2">
           <TeamInDraft
-            pickNumber={index + 1}  // Use the index + 1 as the pick number
+            pickNumber={index + 1}
             teamName={team.team.team_name}
             logoURL={`/images/${team.team.team_name}.png`}
+            draftedPlayer={draftedPlayers[team.team.team_name] || "Upcoming"}
+            isOnTheClock={index === currentPickIndex}
           />
         </div>
       ))}

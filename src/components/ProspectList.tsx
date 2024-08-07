@@ -11,7 +11,11 @@ export interface ProspectProps {
   position: string;
 }
 
-const ProspectList: React.FC = () => {
+interface ProspectListProps {
+  onDraft: (prospect: ProspectProps) => void;
+}
+
+const ProspectList: React.FC<ProspectListProps> = ({ onDraft }) => {
   const [prospects, setProspects] = useState<ProspectProps[]>([]);
   const [searchPlayer, setSearchPlayer] = useState('');
   const [positionFilter, setPositionFilter] = useState('');
@@ -41,6 +45,11 @@ const ProspectList: React.FC = () => {
     prospect.name.toLowerCase().includes(searchPlayer.toLowerCase()) &&
     (positionFilter === '' || prospect.position === positionFilter)
   );
+
+  const handleDraft = (prospect: ProspectProps) => {
+    onDraft(prospect);
+    setProspects(prospects.filter(p => p.name !== prospect.name));
+  };
 
   const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
@@ -81,6 +90,7 @@ const ProspectList: React.FC = () => {
             prospectName={prospect.name}
             position={prospect.position}
             school={prospect.school}
+            onDraft={() => handleDraft(prospect)}
           />
         ))}
       </div>

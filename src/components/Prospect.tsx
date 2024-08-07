@@ -7,9 +7,10 @@ interface ProspectProps {
   prospectName: string;
   position: string;
   school: string;
+  onDraft: () => void;
 }
 
-const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, school }) => {
+const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, school, onDraft }) => {
   return (
     <div className="bg-white w-92 h-16 border-black rounded border flex flex-row justify-center items-center mb-2">
       <div className="bg-white w-8 h-12 border-white flex rounded border ml-2 items-center justify-start text-lg font-bold">
@@ -25,7 +26,10 @@ const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, schoo
         </div>
       </div>
 
-      <Button className='bg-blue-500 w-24 h-10 rounded-lg flex items-center justify-center m-2 text-white hover:bg-blue-600'>
+      <Button 
+        className='bg-blue-500 w-24 h-10 rounded-lg flex items-center justify-center m-2 text-white hover:bg-blue-600'
+        onClick={onDraft}
+      >
         Draft
       </Button>
     </div>
