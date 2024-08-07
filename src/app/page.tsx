@@ -11,6 +11,12 @@ import TradeWindow from '../components/TradeWindow';
 import { DraftCapital } from '../trade';
 import DraftCompleteWindow from '../components/DraftCompleteWindow';
 
+type DraftPick = {
+  teamName: string;
+  pickNumber: number;
+  playerName: string;
+};
+
 export default function Page() {
   const [draftCapital, setDraftCapital] = useState<DraggableTeam[]>([]);
   const [initialDraftCapital, setInitialDraftCapital] = useState<DraggableTeam[]>([]);
@@ -103,6 +109,14 @@ export default function Page() {
     }
   };
 
+  const generateDraftResults = (): DraftPick[] => {
+    return draftCapital.slice(0, selectedRounds * 32).map((team, index) => ({
+      teamName: team.team.team_name,
+      pickNumber: index + 1,
+      playerName: draftedPlayers[team.team.team_name] || 'N/A'
+    }));
+  };
+
   const handleRestartDraft = () => {
     setDraftedPlayers({});
     setCurrentPickIndex(0);
@@ -183,6 +197,7 @@ export default function Page() {
         <DraftCompleteWindow 
           open={showDraftCompleteWindow}
           onRestart={handleRestartDraft}
+          draftResults={generateDraftResults()}
         />
       )}
     </div>
