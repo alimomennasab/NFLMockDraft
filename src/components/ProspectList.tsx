@@ -54,7 +54,7 @@ const ProspectList: React.FC<ProspectListProps> = ({ onDraft }) => {
   const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-[calc(100vh-400px)]">
       <div className="p-2">
         <TextField
           label="🔍 Search Players"
