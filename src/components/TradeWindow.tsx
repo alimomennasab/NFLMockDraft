@@ -96,8 +96,8 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
           ))}
         </div>
         <div className='flex justify-between'>
-            <Button onClick={handleTrade} className="mt-4 bg-green-600 text-white">Submit Trade</Button>
-            <Button onClick={onClose} className="mt-4 bg-red-600 text-white">Exit Trade</Button>
+            <Button onClick={handleTrade} className="!mt-4 !bg-green-600 !text-white hover:!bg-green-700">Submit Trade</Button>
+            <Button onClick={onClose} className="!mt-4 !bg-red-600 !text-white hover:!bg-red-700">Exit Trade</Button>
         </div>
 
         {message && <Typography className="mt-2">{message}</Typography>}
