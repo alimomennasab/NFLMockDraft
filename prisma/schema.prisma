@@ -22,9 +22,9 @@ model prospects {
 }
 
 model draft_capital {
-  id        Int     @id @default(autoincrement())
-  team_name String  @db.VarChar(50)
-  picks     Int[]   @db.Integer
+  id        Int    @id @default(autoincrement())
+  team_name String @db.VarChar(50)
+  picks     Int[]
 }
 
 model trade_chart {
