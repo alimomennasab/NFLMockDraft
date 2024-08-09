@@ -8,15 +8,17 @@ interface TeamProps {
 
 const Team: React.FC<TeamProps> = ({ pickNumber, teamName, logoURL }) => {
   return (
-    <div className="bg-white max-w-60 w-60 h-16 border-black rounded border flex flex-row justify-between items-center">
-      <div className="bg-white w-8 h-12 border-white flex rounded border ml-2 items-center justify-start text-lg font-bold">
-        {pickNumber}
+    <div className="bg-white w-full max-w-xs mx-auto h-16 border border-black rounded flex items-center justify-between px-2 sm:px-4">
+      <div className="flex items-center space-x-2 sm:space-x-4 flex-1">
+        <div className="w-8 h-12 flex items-center justify-center text-lg font-bold">
+          {pickNumber}
+        </div>
+        <div className='flex-1 text-lg text-gray-600 truncate'>
+          {teamName}
+        </div>
       </div>
-      <div className='bg-white max-w-30 w-16 flex-1 h-12 border-white flex rounded border items-center justify-start text-lg text-gray-600 px-2'>
-        {teamName}
-      </div>
-      <div className='bg-white w-12 h-12 m-2 rounded-full flex items-center justify-center'>
-        <img src={logoURL} alt="Team Logo" className="w-full h-full object-contain rounded-full" />
+      <div className='w-12 h-12 flex-shrink-0 rounded-full overflow-hidden'>
+        <img src={logoURL} alt={`${teamName} Logo`} className="w-full h-full object-contain" />
       </div>
     </div>
   );

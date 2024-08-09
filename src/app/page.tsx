@@ -130,18 +130,18 @@ export default function Page() {
   const limitedDraftCapital = draftCapital.slice(0, 32 * selectedRounds);
 
   return (
-    <div className="flex justify-center items-center h-screen flex-col">
+    <div className="flex justify-center items-center min-h-screen p-2">
       {!isDraftComplete ? (
         <>
           {!draftStarted ? (
-            <div className="border border-gray-200 rounded-lg p-6 shadow-lg w-full h-full md:w-auto">
-              <div className="md:max-w-5xl flex flex-col items-center w-full">
-                <div className="flex justify-between items-center w-full p-4">
-                  <div className="font-bold text-4xl">NFL 2025 Mock Draft</div>
+            <div className="border border-gray-200 rounded-lg p-4 shadow-lg w-full max-w-5xl">
+              <div className="flex flex-col items-center w-full">
+                <div className="flex flex-col md:flex-row justify-between items-center w-full p-4">
+                  <div className="font-bold text-2xl md:text-4xl mb-4 md:mb-0">NFL 2025 Mock Draft</div>
                   <SetRoundButtonGroup defaultRound={1} onRoundChange={handleRoundChange} />
                 </div>
 
-                <div className="md:max-w-5xl justify-center border border-gray-300 items-center p-4 rounded-lg w-full">
+                <div className="w-full border border-gray-300 rounded-lg p-4">
                   <DraftOrderGrid
                     draftCapital={limitedDraftCapital}
                     setDraftCapital={setDraftCapital}
@@ -149,13 +149,13 @@ export default function Page() {
                 </div>
 
                 <div className="flex flex-col items-center mt-3 w-full">
-                  <div className="italic text-xs text-gray-500 w-full text-center">
+                  <div className="italic text-xs text-gray-500 w-full text-center mb-2">
                     Modify the draft order by dragging and dropping a team
                   </div>
-                  <div className="flex justify-center items-center">
+                  <div className="flex flex-col md:flex-row justify-center items-center">
                     <ResetDraftButton onRestart={handleReset} />
                     <Button
-                      className="!bg-green-600 !text-white !p-3 !flex !justify-center !max-w-sm !m-3 !rounded-lg hover:!bg-green-700"
+                      className="!bg-green-600 !text-white !p-3 !flex !justify-center !w-full md:!w-auto !max-w-sm !m-3 !rounded-lg hover:!bg-green-700"
                       onClick={startDraft}
                     >
                       Start Draft
@@ -165,21 +165,19 @@ export default function Page() {
               </div>
             </div>
           ) : (
-            <div className="flex justify-center items-start h-screen p-4">
-              <div className="flex w-full h-full space-x-4 border border-gray-200 rounded-lg">
-                <div className="w-1/2">
-                  <DraftOrderList 
-                    draftCapital={draftCapital.slice(0, selectedRounds * 32)} 
-                    rounds={selectedRounds} 
-                    draftedPlayers={draftedPlayers} 
-                    currentPickIndex={currentPickIndex}
-                  />
-                </div>
-                <div className="w-1/2 border border-gray-200 rounded-lg mt-2 flex flex-col ">
-                  <TradeButton onClick={() => setTradeWindowOpen(true)} />
-                  <ProspectList onDraft={handleDraft}/>
-                  {tradeMessage && <div className="p-2 text-center text-red-500">{tradeMessage}</div>}
-                </div>
+            <div className="flex flex-col md:flex-row justify-center items-start w-full h-full space-y-4 md:space-y-0 md:space-x-4">
+              <div className="w-full md:w-1/2">
+                <DraftOrderList 
+                  draftCapital={draftCapital.slice(0, selectedRounds * 32)} 
+                  rounds={selectedRounds} 
+                  draftedPlayers={draftedPlayers} 
+                  currentPickIndex={currentPickIndex}
+                />
+              </div>
+              <div className="w-full md:w-1/2 border border-gray-200 rounded-lg mt-2 flex flex-col">
+                <TradeButton onClick={() => setTradeWindowOpen(true)} />
+                <ProspectList onDraft={handleDraft}/>
+                {tradeMessage && <div className="p-2 text-center text-red-500">{tradeMessage}</div>}
               </div>
             </div>
           )}

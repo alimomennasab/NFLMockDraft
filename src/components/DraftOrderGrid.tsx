@@ -21,20 +21,18 @@ interface DraftOrderGridProps {
   setDraftCapital: React.Dispatch<React.SetStateAction<DraggableTeam[]>>;
 }
 
-// SortableItem component handles individual draggable items
 const SortableItem = ({ id, team, pick }: DraggableTeam) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-
-  // drag styling
+  
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 999 : 'auto',
     position: isDragging ? 'relative' : 'static',
   };
-
+  
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="col-span-1 row-span-1">
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners} className="w-full h-full">
       <Team
         pickNumber={pick}
         teamName={team.team_name}
@@ -44,12 +42,11 @@ const SortableItem = ({ id, team, pick }: DraggableTeam) => {
   );
 };
 
-// DraftOrderGrid component handles the entire grid of draggable items
 const DraftOrderGrid: React.FC<DraftOrderGridProps> = ({ draftCapital, setDraftCapital }) => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 10, // minimum distance for activation
+        distance: 10,
       },
     })
   );
@@ -66,7 +63,7 @@ const DraftOrderGrid: React.FC<DraftOrderGridProps> = ({ draftCapital, setDraftC
           pick: index + 1,
           team: {
             ...item.team,
-            picks: item.team.picks.map((pick, pickIndex) => 
+            picks: item.team.picks.map((pick, pickIndex) =>
               pickIndex === 0 ? index + 1 : pick
             )
           },
@@ -79,7 +76,7 @@ const DraftOrderGrid: React.FC<DraftOrderGridProps> = ({ draftCapital, setDraftC
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={draftCapital} strategy={rectSortingStrategy}>
-        <div className='grid grid-cols-4 gap-2'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {draftCapital.map((item) => (
             <SortableItem key={item.id} {...item} />
           ))}

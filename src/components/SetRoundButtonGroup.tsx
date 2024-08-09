@@ -15,7 +15,7 @@ const SetRoundButtonGroup: React.FC<SetRoundButtonGroupProps> = ({ defaultRound 
   };
 
   return (
-    <div className='flex items-center'>
+    <div className='flex items-center border border-gray-300 rounded-lg p-2'>
       <h1 className='pr-2'>Rounds</h1>
       <ButtonGroup className='text-green-600'>
         <Button

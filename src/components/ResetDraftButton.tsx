@@ -7,7 +7,10 @@ interface ResetDraftButtonProps {
 
 const ResetDraftButton: React.FC<ResetDraftButtonProps> = ({ onRestart }) => {
   return (
-    <Button onClick={onRestart} className='!bg-red-600 !text-white !p-3 !flex !justify-center !max-w-sm !m-4 !rounded-lg hover:!bg-red-800'>
+    <Button 
+    onClick={onRestart} 
+    className="!bg-red-600 !text-white !p-3 !flex !justify-center !w-full md:!w-auto !max-w-sm !m-3 !rounded-lg hover:!bg-red-700"
+    >
       Reset Order
     </Button>
   );
