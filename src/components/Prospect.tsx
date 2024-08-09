@@ -27,7 +27,7 @@ const Prospect: React.FC<ProspectProps> = ({ rank, prospectName, position, schoo
       </div>
 
       <Button 
-        className='bg-blue-500 w-24 h-10 rounded-lg flex items-center justify-center m-2 text-white hover:bg-blue-600'
+        className='!bg-blue-500 !w-24 !h-10 !rounded-lg !flex !items-center !justify-center !m-2 !text-white hover:!bg-blue-600'
         onClick={onDraft}
       >
         Draft

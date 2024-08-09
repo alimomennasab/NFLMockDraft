@@ -155,7 +155,7 @@ export default function Page() {
                   <div className="flex justify-center items-center">
                     <ResetDraftButton onRestart={handleReset} />
                     <Button
-                      className="bg-green-600 text-white p-3 flex justify-center max-w-sm m-3 rounded-lg hover:bg-green-700"
+                      className="!bg-green-600 !text-white !p-3 !flex !justify-center !max-w-sm !m-3 !rounded-lg hover:!bg-green-700"
                       onClick={startDraft}
                     >
                       Start Draft
