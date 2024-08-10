@@ -7,9 +7,10 @@ interface TradeWindowProps {
   onClose: () => void;
   draftCapital: DraftCapital[];
   onTradeSubmit: (updatedTeams: DraftCapital[]) => void;
+  currentPickIndex: number;
 }
 
-const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, onTradeSubmit }) => {
+const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, onTradeSubmit, currentPickIndex }) => {
   const [team1, setTeam1] = useState<string>('');
   const [team2, setTeam2] = useState<string>('');
   const [team1Picks, setTeam1Picks] = useState<number[]>([]);
@@ -51,6 +52,8 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
     return team ? team.picks : [];
   };
 
+  const isPickUsed = (pick: number) => pick <= currentPickIndex;
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-11/12 sm:w-4/5 md:w-3/4 lg:w-2/3 max-w-3xl mx-auto my-4 sm:my-20 overflow-y-auto max-h-[90vh]">
@@ -68,10 +71,11 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
                 <Checkbox
                   checked={team1Picks.includes(pick)}
                   onChange={(e) => handlePickChange(team1, pick, e.target.checked)}
+                  disabled={isPickUsed(pick)}
                 />
               }
               label={`Pick ${pick}`}
-              className="mr-2"
+              className={`mr-2 ${isPickUsed(pick) ? 'text-gray-400' : ''}`}
             />
           ))}
         </div>
@@ -88,10 +92,11 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
                 <Checkbox
                   checked={team2Picks.includes(pick)}
                   onChange={(e) => handlePickChange(team2, pick, e.target.checked)}
+                  disabled={isPickUsed(pick)}
                 />
               }
               label={`Pick ${pick}`}
-              className="mr-2"
+              className={`mr-2 ${isPickUsed(pick) ? 'text-gray-400' : ''}`}
             />
           ))}
         </div>

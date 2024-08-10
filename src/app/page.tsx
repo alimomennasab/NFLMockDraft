@@ -70,19 +70,20 @@ export default function Page() {
     console.log("Trade submitted. Updated teams:", updatedTeams);
   
     const updatedDraftCapital = updatedTeams.flatMap(team =>
-      team.picks.map(pick => ({
+      // filter used picks
+      team.picks.filter(pick => pick > currentPickIndex).map(pick => ({
         id: `${team.team_name}-${pick}`,
         team,
         pick
       }))
     );
   
-    // Remove duplicates based on the 'id' property
+    // remove duplicates based on the 'id' property
     const uniqueUpdatedDraftCapital = Array.from(
       new Map(updatedDraftCapital.map(item => [item.id, item])).values()
     );
   
-    // Sort the unique updated draft capital by pick number
+    // sort the unique updated draft capital by pick number
     uniqueUpdatedDraftCapital.sort((a, b) => a.pick - b.pick);
   
     console.log("Updated draft capital:", uniqueUpdatedDraftCapital);
@@ -202,6 +203,7 @@ export default function Page() {
             }}
             draftCapital={draftCapital.map(dc => dc.team)}
             onTradeSubmit={handleTradeSubmit}
+            currentPickIndex={currentPickIndex}
           />
         </>
       ) : (
