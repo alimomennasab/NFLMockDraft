@@ -53,14 +53,14 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box className="bg-white p-6 rounded-lg shadow-lg w-2/3 mx-auto my-20">
-        <Typography variant="h6" gutterBottom>Offer Trade</Typography>
+      <Box className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-11/12 sm:w-4/5 md:w-3/4 lg:w-2/3 max-w-3xl mx-auto my-4 sm:my-20 overflow-y-auto max-h-[90vh]">
+        <Typography variant="h6" gutterBottom className="text-center">Offer Trade</Typography>
         <Select value={team1} onChange={(e) => setTeam1(e.target.value as string)} fullWidth className="mb-4">
           {draftCapital.map(team => (
             <MenuItem key={team.team_name} value={team.team_name}>{team.team_name}</MenuItem>
           ))}
         </Select>
-        <div className="flex mb-4">
+        <div className="flex flex-wrap mb-4 gap-2">
           {getTeamPicks(team1).map(pick => (
             <FormControlLabel
               key={pick}
@@ -80,7 +80,7 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
             <MenuItem key={team.team_name} value={team.team_name}>{team.team_name}</MenuItem>
           ))}
         </Select>
-        <div className="flex mb-4">
+        <div className="flex flex-wrap mb-4 gap-2">
           {getTeamPicks(team2).map(pick => (
             <FormControlLabel
               key={pick}
@@ -95,12 +95,11 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
             />
           ))}
         </div>
-        <div className='flex justify-between'>
-            <Button onClick={handleTrade} className="!mt-4 !bg-green-600 !text-white hover:!bg-green-700">Submit Trade</Button>
-            <Button onClick={onClose} className="!mt-4 !bg-red-600 !text-white hover:!bg-red-700">Exit Trade</Button>
+        <div className='flex flex-col sm:flex-row justify-between gap-2'>
+          <Button onClick={handleTrade} className="!mt-4 !bg-green-600 !text-white hover:!bg-green-700 !w-full sm:!w-auto">Submit Trade</Button>
+          <Button onClick={onClose} className="!mt-4 !bg-red-600 !text-white hover:!bg-red-700 !w-full sm:!w-auto">Exit Trade</Button>
         </div>
-
-        {message && <Typography className="mt-2">{message}</Typography>}
+        {message && <Typography className="mt-2 text-center">{message}</Typography>}
       </Box>
     </Modal>
   );

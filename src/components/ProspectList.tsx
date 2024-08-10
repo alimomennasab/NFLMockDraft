@@ -54,7 +54,7 @@ const ProspectList: React.FC<ProspectListProps> = ({ onDraft }) => {
   const positions = ['QB', 'WR', 'TE', 'RB', 'OT', 'IOL', 'CB', 'S', 'EDGE', 'DL', 'LB'];
 
   return (
-    <div className="flex flex-col h-full w-[calc(100vh-400px)]">
+    <div className="flex flex-col h-full">
       <div className="p-2">
         <TextField
           label="🔍 Search Players"
@@ -82,7 +82,7 @@ const ProspectList: React.FC<ProspectListProps> = ({ onDraft }) => {
           ))}
         </Select>
       </div>
-      <div className="flex-grow overflow-y-auto p-2 h-0">
+      <div className="flex-grow overflow-y-auto p-2">
         {filteredProspects.map((prospect) => (
           <Prospect
             key={prospect.ranking}

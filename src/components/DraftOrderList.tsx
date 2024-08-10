@@ -17,7 +17,7 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds, d
   return (
     <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
       {limitedDraftOrder.map((team, index) => (
-        <div key={team.id} className="border-b border-gray-300 p-2">
+        <div key={team.id} className="border-b border-gray-300">
           <TeamInDraft
             pickNumber={index + 1}
             teamName={team.team.team_name}
