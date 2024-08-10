@@ -1,4 +1,3 @@
-
 # NFL Mock Draft Simulator
 
 Become an NFL general manager with this free mock draft simulator.
