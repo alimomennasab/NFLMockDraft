@@ -92,11 +92,14 @@ export default function Page() {
   const handleDraft = (prospect: ProspectProps) => {
     const totalPicks = selectedRounds * 32;
     if (currentPickIndex < totalPicks) {
-      console.log(prospect.name + " drafted at pick " + (currentPickIndex + 1));
-      const currentTeam = draftCapital[currentPickIndex].team.team_name;
+      const currentPick = draftCapital[currentPickIndex];
+      const pickId = `${currentPick.team.team_name}-${currentPick.pick}`;
+      
+      console.log(`${prospect.name} drafted at pick ${currentPickIndex + 1} by ${currentPick.team.team_name}`);
+      
       setDraftedPlayers(prev => ({
         ...prev,
-        [currentTeam]: prospect.name
+        [pickId]: prospect.name
       }));
       
       const nextPickIndex = currentPickIndex + 1;
@@ -110,12 +113,15 @@ export default function Page() {
   };
 
   const generateDraftResults = (): DraftPick[] => {
-    return draftCapital.slice(0, selectedRounds * 32).map((team, index) => ({
+  return draftCapital.slice(0, selectedRounds * 32).map((team, index) => {
+    const pickId = `${team.team.team_name}-${team.pick}`;
+    return {
       teamName: team.team.team_name,
       pickNumber: index + 1,
-      playerName: draftedPlayers[team.team.team_name] || 'N/A'
-    }));
-  };
+      playerName: draftedPlayers[pickId] || 'NA'
+    };
+  });
+};
 
   const handleRestartDraft = () => {
     setDraftedPlayers({});

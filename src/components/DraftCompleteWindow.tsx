@@ -21,7 +21,7 @@ const DraftCompleteWindow: React.FC<DraftCompleteWindowProps> = ({ open, onResta
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center">Draft Complete!</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {draftResults.map((pick) => (
-            <div key={pick.pickNumber} className="border rounded p-2 text-sm flex justify-between items-center">
+            <div key={pick.pickNumber} className="border rounded p-1 text-sm flex justify-between items-center">
               <div className="flex-grow mr-2">
                 <div className="font-bold text-xs sm:text-sm">{pick.pickNumber}. {pick.teamName}</div>
                 <div className="text-xs sm:text-sm truncate">{pick.playerName}</div>
@@ -29,7 +29,7 @@ const DraftCompleteWindow: React.FC<DraftCompleteWindowProps> = ({ open, onResta
               <img 
                 src={`/images/${pick.teamName}.png`} 
                 alt="Team Logo" 
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain rounded-full flex-shrink-0" 
+                className="w-8 h-8 sm:w-10 sm:h-8 md:w-8 md:h-10 object-contain rounded-full flex-shrink-0" 
               />
             </div>
           ))}

@@ -1,4 +1,3 @@
-// DraftOrderList.tsx
 import React from 'react';
 import TeamInDraft from './TeamInDraft';
 import { DraggableTeam } from './DraftOrderGrid';
@@ -16,17 +15,22 @@ const DraftOrderList: React.FC<DraftOrderListProps> = ({ draftCapital, rounds, d
 
   return (
     <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
-      {limitedDraftOrder.map((team, index) => (
-        <div key={team.id} className="border-b border-gray-300">
-          <TeamInDraft
-            pickNumber={index + 1}
-            teamName={team.team.team_name}
-            logoURL={`/images/${team.team.team_name}.png`}
-            draftedPlayer={draftedPlayers[team.team.team_name] || "Upcoming"}
-            isOnTheClock={index === currentPickIndex}
-          />
-        </div>
-      ))}
+      {limitedDraftOrder.map((team, index) => {
+        const pickId = `${team.team.team_name}-${team.pick}`;
+        const draftedPlayer = draftedPlayers[pickId] || "Upcoming";
+        
+        return (
+          <div key={team.id} className="border-b border-gray-300 p-2">
+            <TeamInDraft
+              pickNumber={index + 1}
+              teamName={team.team.team_name}
+              logoURL={`/images/${team.team.team_name}.png`}
+              draftedPlayer={draftedPlayer}
+              isOnTheClock={index === currentPickIndex}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };
