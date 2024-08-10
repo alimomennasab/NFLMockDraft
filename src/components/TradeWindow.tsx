@@ -17,6 +17,12 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
   const [team2Picks, setTeam2Picks] = useState<number[]>([]);
   const [message, setMessage] = useState<string>('');
 
+  // show only 32 team names as trade partners 
+  const uniqueTeamNames = Array.from(new Set(draftCapital.map(team => team.team_name)));
+  const noDupeTeamNames = uniqueTeamNames.map(teamName => 
+    draftCapital.find(team => team.team_name === teamName)!
+  );
+
   useEffect(() => {
     setTeam1Picks([]);
     setTeam2Picks([]);
@@ -59,7 +65,7 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
       <Box className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-11/12 sm:w-4/5 md:w-3/4 lg:w-2/3 max-w-3xl mx-auto my-4 sm:my-20 overflow-y-auto max-h-[90vh]">
         <Typography variant="h6" gutterBottom className="text-center">Offer Trade</Typography>
         <Select value={team1} onChange={(e) => setTeam1(e.target.value as string)} fullWidth className="mb-4">
-          {draftCapital.map(team => (
+          {noDupeTeamNames.map(team => (
             <MenuItem key={team.team_name} value={team.team_name}>{team.team_name}</MenuItem>
           ))}
         </Select>
@@ -80,7 +86,7 @@ const TradeWindow: React.FC<TradeWindowProps> = ({ open, onClose, draftCapital, 
           ))}
         </div>
         <Select value={team2} onChange={(e) => setTeam2(e.target.value as string)} fullWidth className="mb-4">
-          {draftCapital.map(team => (
+          {noDupeTeamNames.map(team => (
             <MenuItem key={team.team_name} value={team.team_name}>{team.team_name}</MenuItem>
           ))}
         </Select>
