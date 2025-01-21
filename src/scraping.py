@@ -154,7 +154,7 @@ def scrape_trade_chart():
     print("Amount of Jimmy Johnson draft values: ", len(pick_values))
 
 scrape_prospects()
-#scrape_teams()
+scrape_teams()
 #scrape_trade_chart()
 
 conn.commit()
