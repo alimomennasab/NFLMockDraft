@@ -155,7 +155,7 @@ def scrape_trade_chart():
 
 scrape_prospects()
 scrape_teams()
-#scrape_trade_chart()
+scrape_trade_chart()
 
 conn.commit()
 cur.close()
