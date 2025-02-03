@@ -33,19 +33,21 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const response = await fetch('/api/draftCapital');
-        const capital: DraftCapital[] = await response.json();
-        console.log('Draft capital data:', capital);
-
+        console.log('API Response:', response);
+        const capital = await response.json();
+        console.log('Parsed JSON:', capital);
+        if (!Array.isArray(capital)) {
+          console.error('Expected an array but got:', capital);
+          return;
+        }
         const draggableTeams = capital.flatMap(team =>
-          team.picks.map(pick => ({
+          team.picks.map((pick: any) => ({
             id: `${team.team_name}-${pick}`,
             team,
             pick
           }))
         );
-
         draggableTeams.sort((a, b) => a.pick - b.pick);
-
         setDraftCapital(draggableTeams);
         setInitialDraftCapital(draggableTeams);
       } catch (error) {
