@@ -34,6 +34,7 @@ export default function Page() {
       try {
         const response = await fetch('/api/draftCapital');
         const capital: DraftCapital[] = await response.json();
+        console.log('Draft capital data:', capital);
 
         const draggableTeams = capital.flatMap(team =>
           team.picks.map(pick => ({
